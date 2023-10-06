@@ -1,0 +1,16 @@
+.main{
+color: white;
+    background-color: #31b572;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 300px;
+}
+
+.plant-delete {
+    background-color: rgb(168, 93, 93);
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 15px;
+}
