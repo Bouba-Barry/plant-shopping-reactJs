@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <Banner />
-      <div className="lmj-layout-inner">
+      <div className="mainComponent">
         <Cart cart={cart} updateCart={setCart} />
         <ShoopingList cart={cart} updateCart={setCart} />
       </div>

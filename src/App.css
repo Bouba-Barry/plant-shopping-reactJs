@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 
-.lmj-layout-inner{
+.mainComponent{
   display: flex;
   justify-content: space-between;
 

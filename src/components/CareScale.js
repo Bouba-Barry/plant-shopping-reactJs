@@ -1,21 +1,14 @@
 import Sun from "../assets/sun.svg";
 import Water from "../assets/water.svg";
 
-const quantityLabel = {
-  1: "peu",
-  2: "modérément",
-  3: "beaucoup",
-};
-
 function CareScale({ scaleValue, careType }) {
-  const range = [1, 2, 3];
-  const scaleType =
-    careType === "light" ? (
-      <img src={Sun} alt="sun-icon" />
-    ) : (
-      <img src={Water} alt="water-icon" />
-    );
+  const quantityLabel = {
+    1: "peu",
+    2: "modérément",
+    3: "beaucoup",
+  };
 
+  const range = [1, 2, 3];
   return (
     <div
       onClick={() =>
@@ -26,9 +19,15 @@ function CareScale({ scaleValue, careType }) {
         )
       }
     >
-      {range.map((rangeElem) =>
-        scaleValue >= rangeElem ? (
-          <span key={rangeElem.toString()}>{scaleType}</span>
+      {range.map((myElt) =>
+        scaleValue >= myElt ? (
+          <span key={myElt.toString()}>
+            {careType === "light" ? (
+              <img src={Sun} alt="sun-icon" />
+            ) : (
+              <img src={Water} alt="water-icon" />
+            )}
+          </span>
         ) : null
       )}
     </div>

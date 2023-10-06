@@ -6,12 +6,12 @@ import "../styles/shoopingList.css";
 
 function ShoopingList({ cart, updateCart }) {
   const [selectedCategorie, setSelectedCategorie] = useState("");
+
   const categories = plantList.reduce(
     (acc, plant) =>
       acc.includes(plant.category) ? acc : acc.concat(plant.category),
     []
   );
-  console.log("cate: ", categories);
 
   const addToCart = (name, price) => {
     const item = cart.find((elt) => elt.name === name);
