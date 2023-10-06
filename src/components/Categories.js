@@ -17,7 +17,7 @@ function Categories({
           setSelectedCategorie(e.target.value);
         }}
       >
-        <option value={selectedCategorie}>---</option>
+        <option value="">---</option>
         {listCategories.map((cat) => (
           <option key={cat} value={cat}>
             {cat}

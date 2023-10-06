@@ -24,22 +24,31 @@ const Cart = ({ cart, updateCart }) => {
 
           <div className="item">
             <ul>
-              {cart.map(({ name, price, amount }, index) => (
-                <div key={`${name}-${index}`}>
-                  {name} {price}€ x {amount}
-                  <button
-                    className="plant-delete"
-                    onClick={() => {
-                      removeItem(name);
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
+              {cart.length > 0 ? (
+                cart.map(({ name, price, amount }, index) => (
+                  <div key={`${name}-${index}`}>
+                    {name} {price}€ x {amount}
+                    <button
+                      className="plant-delete"
+                      onClick={() => {
+                        removeItem(name);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div>votre Panier est vide ! Aller Commander ! </div>
+              )}
             </ul>
             <h3>Total :{total}€</h3>
-            <button onClick={() => updateCart([])}>Vider le panier</button>
+            <button
+              style={{ marginTop: "15px" }}
+              onClick={() => updateCart([])}
+            >
+              Vider le panier
+            </button>
           </div>
         </div>
       )}

@@ -3,7 +3,8 @@
     align-items: baseline;
     justify-content: end;
     padding: 15px;
-
+    border-bottom: 2px solid black;
+    margin-bottom: 5px;
 }
 .logo{
     width: 25px;

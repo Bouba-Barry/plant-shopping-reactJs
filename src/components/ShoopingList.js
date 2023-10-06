@@ -30,13 +30,13 @@ function ShoopingList({ cart, updateCart }) {
   };
 
   return (
-    <div className="lmj-shopping-list">
+    <div className="shopping-list">
       <Categories
         listCategories={categories}
         selectedCategorie={selectedCategorie}
         setSelectedCategorie={setSelectedCategorie}
       />
-      <div className="lmj-plant-list">
+      <div className="plant-list">
         {plantList.map((plant) =>
           !selectedCategorie || selectedCategorie === plant.category ? (
             <div key={plant.id}>
