@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { plantList } from "../data/plantlist";
 import Categories from "./Categories";
 import PlantItem from "./PlantItem";
 import "../styles/shoopingList.css";
+import { useGetItems } from "../hooks/item/useGetItems";
 
 function ShoopingList({ cart, updateCart }) {
+  const { statusItems, plantList } = useGetItems();
   const [selectedCategorie, setSelectedCategorie] = useState("");
 
   const categories = plantList.reduce(
@@ -31,32 +32,39 @@ function ShoopingList({ cart, updateCart }) {
 
   return (
     <div className="shopping-list">
-      <Categories
-        listCategories={categories}
-        selectedCategorie={selectedCategorie}
-        setSelectedCategorie={setSelectedCategorie}
-      />
-      <div className="plant-list">
-        {plantList.map((plant) =>
-          !selectedCategorie || selectedCategorie === plant.category ? (
-            <div key={plant.id}>
-              <PlantItem
-                cover={plant.cover}
-                name={plant.name}
-                water={plant.water}
-                light={plant.light}
-                price={plant.price}
-              />
-              <button
-                className="btn-add"
-                onClick={() => addToCart(plant.name, plant.price)}
-              >
-                Ajouter
-              </button>
+      {
+        (statusItems = "success" && plantList.length > 0 && (
+          <>
+            <Categories
+              listCategories={categories}
+              selectedCategorie={selectedCategorie}
+              setSelectedCategorie={setSelectedCategorie}
+            />
+            <div className="plant-list">
+              {plantList.map((plant) =>
+                !selectedCategorie || selectedCategorie === plant.category ? (
+                  <div key={plant._id}>
+                    <PlantItem
+                      cover={plant.cover}
+                      name={plant.name}
+                      water={plant.water}
+                      light={plant.light}
+                      price={plant.price}
+                    />
+                    <button
+                      className="btn-add"
+                      onClick={() => addToCart(plant.name, plant.price)}
+                    >
+                      Ajouter
+                    </button>
+                  </div>
+                ) : null
+              )}
             </div>
-          ) : null
-        )}
-      </div>
+          </>
+        ))
+      }
+      {(statusItems = "error" && <div>Error while loading all data .....</div>)}
     </div>
   );
 }
