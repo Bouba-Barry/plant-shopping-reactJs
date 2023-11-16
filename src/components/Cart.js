@@ -1,11 +1,25 @@
 import { useState } from "react";
 import "../styles/cart.css";
-const Cart = ({ cart, updateCart }) => {
+import UserInfo from "./UserInfo";
+const Cart = ({ cart, updateCart, orderCart, token, setToken }) => {
   const [open, setOpen] = useState(false);
-  const handleOpening = () => setOpen(!open);
 
+  const [showForm, setShowForm] = useState(false);
+
+  const handleShowingForm = () => setShowForm(!showForm);
+
+  const handleOpening = () => setOpen(!open);
   const removeItem = (name) => {
     updateCart(cart.filter((elt) => elt.name !== name));
+  };
+  const handleOrder = () => {
+    if (token !== null) {
+      orderCart();
+      console.log("toke:  ", token);
+    } else {
+      console.log("tokennnn null:  ");
+      handleShowingForm();
+    }
   };
 
   const total = cart.reduce(
@@ -19,38 +33,61 @@ const Cart = ({ cart, updateCart }) => {
         {!open ? "Ouvrir Panier" : "Fermer Panier"}
       </button>
       {open && (
-        <div className="main">
-          <h2>Votre Panier</h2>
+        <>
+          <div className="main">
+            <h2>Votre Panier</h2>
 
-          <div className="item">
-            <ul>
-              {cart.length > 0 ? (
-                cart.map(({ name, price, amount }, index) => (
-                  <div key={`${name}-${index}`}>
-                    {name} {price}€ x {amount}
-                    <button
-                      className="plant-delete"
-                      onClick={() => {
-                        removeItem(name);
-                      }}
-                    >
-                      X
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <div>votre Panier est vide ! Aller Commander ! </div>
-              )}
-            </ul>
-            <h3>Total :{total}€</h3>
-            <button
-              style={{ marginTop: "15px" }}
-              onClick={() => updateCart([])}
-            >
-              Vider le panier
-            </button>
+            <div className="item">
+              <ul>
+                {cart.length > 0 ? (
+                  cart.map(({ name, price, amount }, index) => (
+                    <div key={`${name}-${index}`}>
+                      {name} {price}€ x {amount}
+                      <button
+                        className="plant-delete"
+                        onClick={() => {
+                          removeItem(name);
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <div>votre Panier est vide ! Aller Commander ! </div>
+                )}
+              </ul>
+              <h3>Total :{total}€</h3>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <button
+                    style={{ marginTop: "15px" }}
+                    onClick={() => updateCart([])}
+                  >
+                    Vider le panier
+                  </button>
+                </div>
+                <div>
+                  <button
+                    style={{ marginTop: "15px", marginLeft: "15px" }}
+                    onClick={() => handleOrder()}
+                  >
+                    enregistrer
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+
+          <div>
+            {showForm && (
+              <UserInfo
+                handleUserIsLogged={handleShowingForm}
+                setToken={setToken}
+              />
+            )}
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Categories from "./Categories";
 import PlantItem from "./PlantItem";
 import "../styles/shoopingList.css";
@@ -14,11 +14,11 @@ function ShoopingList({ cart, updateCart }) {
     []
   );
 
-  const addToCart = (name, price) => {
+  const addToCart = (id, name, price) => {
     const item = cart.find((elt) => elt.name === name);
     console.log("item : ", item);
     if (!item) {
-      updateCart([...cart, { name, price, amount: 1 }]);
+      updateCart([...cart, { id, name, price, amount: 1 }]);
     } else {
       const updatedCart = cart.map((cartItem) =>
         cartItem.name === name
@@ -32,39 +32,40 @@ function ShoopingList({ cart, updateCart }) {
 
   return (
     <div className="shopping-list">
-      {
-        (statusItems = "success" && plantList.length > 0 && (
-          <>
-            <Categories
-              listCategories={categories}
-              selectedCategorie={selectedCategorie}
-              setSelectedCategorie={setSelectedCategorie}
-            />
-            <div className="plant-list">
-              {plantList.map((plant) =>
-                !selectedCategorie || selectedCategorie === plant.category ? (
-                  <div key={plant._id}>
-                    <PlantItem
-                      cover={plant.cover}
-                      name={plant.name}
-                      water={plant.water}
-                      light={plant.light}
-                      price={plant.price}
-                    />
-                    <button
-                      className="btn-add"
-                      onClick={() => addToCart(plant.name, plant.price)}
-                    >
-                      Ajouter
-                    </button>
-                  </div>
-                ) : null
-              )}
-            </div>
-          </>
-        ))
-      }
-      {(statusItems = "error" && <div>Error while loading all data .....</div>)}
+      {statusItems === "isLoading" && <div>loading the data</div>}
+      {plantList.length > 0 && (
+        <>
+          <Categories
+            listCategories={categories}
+            selectedCategorie={selectedCategorie}
+            setSelectedCategorie={setSelectedCategorie}
+          />
+          <div className="plant-list">
+            {plantList.map((plant) =>
+              !selectedCategorie || selectedCategorie === plant.category ? (
+                <div key={plant._id}>
+                  <PlantItem
+                    cover={plant.cover}
+                    name={plant.name}
+                    water={plant.water}
+                    light={plant.light}
+                    price={plant.price}
+                  />
+                  <button
+                    className="btn-add"
+                    onClick={() =>
+                      addToCart(plant._id, plant.name, plant.price)
+                    }
+                  >
+                    Ajouter
+                  </button>
+                </div>
+              ) : null
+            )}
+          </div>
+        </>
+      )}
+      {statusItems === "error" && <div>Error while loading all data .....</div>}
     </div>
   );
 }
