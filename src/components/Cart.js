@@ -15,9 +15,7 @@ const Cart = ({ cart, updateCart, orderCart, token, setToken }) => {
   const handleOrder = () => {
     if (token !== null) {
       orderCart();
-      console.log("toke:  ", token);
     } else {
-      console.log("tokennnn null:  ");
       handleShowingForm();
     }
   };

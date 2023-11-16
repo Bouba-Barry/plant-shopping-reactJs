@@ -39,7 +39,7 @@ const UserInfo = ({ handleUserIsLogged, setToken }) => {
       insertUserMutation.mutateAsync(user);
       setEmail("");
       setPassword("");
-      toast.success("Successfuly saved");
+      toast.info("Registration is successfull ! now sign in");
       handleRegister();
     } else {
       // const generateToken = email + Math.random() * 100;*

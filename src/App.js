@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Cart from "./components/Cart";
 import useInsertOrder from "./hooks/order/useInsertOrder";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const savedCart = localStorage.getItem("cart");
@@ -42,12 +43,17 @@ function App() {
       status: "pending",
     };
     if (token !== null) {
-      insertOrderMutation.mutateAsync(order);
-      toast.success("Order is successfully saved");
-      console.log("successs..........");
+      insertOrderMutation.mutateAsync(order, {
+        onSuccess: () => {
+          toast.success("Order is successfully saved");
+          setCart([]);
+        },
+        onError: () => {
+          toast.error("Error during saving order....");
+        },
+      });
     } else {
       toast.error("Login first to save your order");
-      console.log(" should login first ...");
     }
   };
   return (
